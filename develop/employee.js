@@ -6,15 +6,15 @@ class Employee {
     }
 
     getName() {
-        return`Name: ${this.name}`;
+       console.log(`Name: ${this.name}`);
     }
 
     getId() {
-        return `ID: ${this.id}`;
+        console.log(`ID: ${this.id}`) ;
     }
 
     getEmail() {
-        return `Email: ${this.email}`
+      console.log(`Email: ${this.email}`) 
     }
 
     getRole () {
