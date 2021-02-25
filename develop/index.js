@@ -1,22 +1,21 @@
 // List of packages needed for this application
 const inquirer = require('inquirer');
-//const fs = require('fs');
+const fs = require('fs');
+const employees = []; //This array will be populated to employees added to team profile
 
+//Variables holding array of questions related to a manager, engineer or intern profile
 const managerQues = ["What is the team manager's name?",
     "What is the team manager's ID?",
     "What is the team manager's email?",
-    "What is the team manager's office number?",
-    "What type of team member would you like to add?"];
+    "What is the team manager's office number?"];
 const engineerQues = ["What is the engineer's name?",
     "What is the engineer's ID?",
     "What is the engineer's email?",
-    "What is the engineer's  GitHub username?",
-    "What type of team member would you like to add?"];
+    "What is the engineer's  GitHub username?"];
 const internQues = ["What is the intern's name?",
     "What is the intern's ID?",
     "What is the intern's email?", 
-    "What is the intern's school?",
-    "What type of team member would you like to add?"];
+    "What is the intern's school?"];
 
 //Manager questions
 function addManager() {
@@ -41,22 +40,45 @@ function addManager() {
             name: 'officeNum',
             message: managerQues[3],
         },
-        {
-            type: 'list',
-            name: 'memberChoice',
-            message: managerQues[4],
-            choices: ['engineer', 'intern'],
-        },
-    ]).then((response) => {
-        if (response.memberChoice == 'engineer') {
-            addEngineer();
-        }
-        else {
-            addIntern();
-        }
+    ]).then( function ({name, id, email, officeNum}) {
+        let manager = new Manager (name, id, email, officeNum)
+        //TODO: addEmployees.push(manager)
+        //TODO: pass 'manager' to card html
+        newEmployees(); 
     })
 }
 
+// .then((response) => {
+//     if (response.memberChoice == 'engineer') {
+//         addEngineer();
+//     }
+//     else {
+//         addIntern();
+//     }
+// })
+//adding new members
+
+//This function adds team members
+function addEmployees() {
+    inquirer.prompt([
+        {
+            type:'list',
+            name:'memberChoice',
+            message:'Would you like to add more team members? Please select choices provided',
+            choices: ['engineer', 'intern', 'No I do not wish to add anymore members'],
+        }
+    ]).then(function({memberChoice}) {
+        if (memberChoice == 'engineer') {
+            addEngineer();
+        }
+        else if (memberChoice =='intern'){
+            addIntern();
+        }else {
+            console.log('html page is completed') //replace with html code
+        }
+    })
+
+}
 //Engineer questions
 function addEngineer() {
     inquirer.prompt([
@@ -80,20 +102,12 @@ function addEngineer() {
             name: 'github',
             message: engineerQues[3],
         },
-        {
-            type: 'list',
-            name: 'memberChoice2',
-            message: engineerQues[4],
-            choice: ['intern', 'manager'],
-        },
-    ]).then((response) => {
-        if (response.memberChoice2 == 'intern') {
-            addIntern();
-        }
-        else {
-            addManager();
-        }
-    });
+    ]).then( function ({name, id, email, github}) {
+        let engineer = new Engineer (name, id, email, github)
+        //TODO: employees.push(engineer)
+        //TODO: pass 'engineer' to card html
+        addEmployees(); 
+    })
 }
 
 //Intern questions
@@ -119,20 +133,12 @@ function addIntern() {
             name: 'school',
             message: internQues[3],
         },
-        {
-            type: 'list',
-            name: 'memberChoice3',
-            message: internQues[4],
-            choice: ['manager', 'engineer'],
-        }
-    ]).then((response) => {
-        if (response.memberChoice3 == 'engineer') {
-            addEngineer();
-        }
-        else {
-            addManager();
-        }
-    });
+    ]).then( function ({name, id, email, school}) {
+        let intern = new Intern (name, id, email, school)
+        //TODO: employees.push(manager)
+        //TODO: pass 'manager' to card html
+        addEmployees(); 
+    })
 }
-addManager();
+
 
