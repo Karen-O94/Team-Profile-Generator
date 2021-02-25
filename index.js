@@ -1,7 +1,12 @@
-// List of packages needed for this application
+// List of dependencies required for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const employees = []; //This array will be populated to employees added to team profile
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+
+ //This array will be populated to employees added to team profile
+ const employees = [];
 
 //Variables holding array of questions related to a manager, engineer or intern profile
 const managerQues = ["What is the team manager's name?",
@@ -141,4 +146,4 @@ function addIntern() {
     })
 }
 
-
+//TODO: Add function to initialise app - ie manager and generateHTML
