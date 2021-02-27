@@ -45,13 +45,16 @@ function addManager() {
             name: 'officeNum',
             message: managerQues[3],
         },
-    ]).then( function ({name, id, email, officeNum}) {
-        let manager = new Manager (name, id, email, officeNum)
-        //TODO: addEmployees.push(manager)
+    ]).then((data) =>{
+        let manager = new Manager (data.name, data.id, data.email, data.officeNum)
+        employees.push(manager)
         //TODO: pass 'manager' to card html
-        newEmployees(); 
-    })
+    
+        addEmployees();
+        writeToFile();
+    });
 }
+
 
 // .then((response) => {
 //     if (response.memberChoice == 'engineer') {
@@ -79,7 +82,7 @@ function addEmployees() {
         else if (memberChoice =='intern'){
             addIntern();
         }else {
-            console.log('html page is completed') //replace with html code
+            writeToFile(); //replace with html code
         }
     })
 
@@ -107,12 +110,14 @@ function addEngineer() {
             name: 'github',
             message: engineerQues[3],
         },
-    ]).then( function ({name, id, email, github}) {
-        let engineer = new Engineer (name, id, email, github)
-        //TODO: employees.push(engineer)
-        //TODO: pass 'engineer' to card html
-        addEmployees(); 
-    })
+    ]).then((data) =>{
+        let engineer = new Engineer (data.name, data.id, data.email, data.officeNum)
+        employees.push(engineer)
+        //TODO: pass 'manager' to card html
+    
+        addEmployees();
+        writeToFile('index.html',data);
+    });
 }
 
 //Intern questions
@@ -138,12 +143,126 @@ function addIntern() {
             name: 'school',
             message: internQues[3],
         },
-    ]).then( function ({name, id, email, school}) {
-        let intern = new Intern (name, id, email, school)
-        //TODO: employees.push(manager)
+    ]).then((data) =>{
+        let intern = new Intern (data.name, data.id, data.email, data.school)
+        employees.push(intern)
         //TODO: pass 'manager' to card html
-        addEmployees(); 
-    })
+    
+        addEmployees();
+        writeToFile();
+    });
 }
 
+
+function writeToFile(fileName, data) {
+    fs.writeFileSync(fileName, generateHTML(data), (err) =>
+    err ? console.error(err) : console.log('Successfully wrote to index.html!'));
+}
 //TODO: Add function to initialise app - ie manager and generateHTML
+ function startHTML (input) {
+     let html = 
+ `<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+     <script src="https://kit.fontawesome.com/77e0e8fa63.js" crossorigin="anonymous"></script>
+     <title>Document</title>
+ </head>
+ 
+ <body>
+     <div class="jumbotron jumbotron-fluid bg-danger" style="height: 80px">
+         <div class="container">
+             <h1 class="display-4 text-center" style="color: white; font-weight: bold;">My Team</h1>
+         </div>
+     </div>
+ 
+ 
+     <div class="container">
+         <div class="row">`;
+
+         fs.writeFile(".index.html", html, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        console.log("start")
+ }
+
+ function addTeamMember(colleague) {
+     return new Promise(function(resolve, reject){
+         const name = colleague.getName();
+         const id = colleague.getId();
+         const email = colleague.getEmail();
+         const role = colleague.getRole();
+            let data = ""; 
+         if(role === "Engineer"){
+             const github = colleague.getGithub();
+            data = 
+                `<div class="card border-dark col-md-3">
+                <div class="card-header text-white bg-primary">
+                    <p>${name}</p>
+                    <p style="font-size: 26px">
+                        <i class="fas fa-glasses" style='font-size:26px;color:white'></i> Engineer
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">ID: ${id}</li>
+                            <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                            <li class="list-group-item">Github: ${github}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>`;
+         }
+         else if (role === "Intern") {
+            const school = colleague.getSchool();
+            data = 
+            `<div class="card border-dark col-md-3">
+            <div class="card-header text-white bg-primary">
+                <p>${name}</p>
+                <p style="font-size: 26px">
+                    <i class="fas fa-user-graduate" style='font-size:26px;color:white'></i> Intern
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                        <li class="list-group-item">School: ${school}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>`
+         } else {
+            const officeNumber = colleague.getOfficeNum();
+            data = 
+            `<div class="card border-dark col-md-3">
+            <div class="card-header text-white bg-primary">
+                <p>Name</p>
+                <p style="font-size: 26px">
+                    <i class='fas fa-mug-hot' style='font-size:26px;color:white'></i> Manager
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="card" style="width: 14rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                        <li class="list-group-item">Office Number: ${officeNumber}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>`
+         }
+     })
+ }
+
+ addManager();
