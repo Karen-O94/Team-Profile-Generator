@@ -199,7 +199,7 @@ function addCards(colleague) {
         if (role === "Engineer") {
             const github = colleague.getGithub();
             data =
-                `<div class="card border-dark col-md-3">
+                `<div class="card border-dark col-md-3 m-4">
                 <div class="card-header text-white bg-primary">
                     <p>${name}</p>
                     <p style="font-size: 26px">
@@ -210,7 +210,7 @@ function addCards(colleague) {
                     <div class="card">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">ID: ${id}</li>
-                            <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
                             <li class="list-group-item">Github: ${github}</li>
                         </ul>
                     </div>
@@ -220,7 +220,7 @@ function addCards(colleague) {
         else if (role === "Intern") {
             const school = colleague.getSchool();
             data =
-                `<div class="card border-dark col-md-3">
+                `<div class="card border-dark col-md-3 m-4">
             <div class="card-header text-white bg-primary">
                 <p>${name}</p>
                 <p style="font-size: 26px">
@@ -231,7 +231,7 @@ function addCards(colleague) {
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
                         <li class="list-group-item">School: ${school}</li>
                     </ul>
                 </div>
@@ -240,9 +240,9 @@ function addCards(colleague) {
         } else {
             const officeNumber = colleague.getOfficeNum();
             data =
-                `<div class="card border-dark col-md-3">
+                `<div class="card border-dark col-md-3 m-4">
             <div class="card-header text-white bg-primary">
-                <p>Name</p>
+                <p>${name}</p>
                 <p style="font-size: 26px">
                     <i class='fas fa-mug-hot' style='font-size:26px;color:white'></i> Manager
                 </p>
@@ -251,7 +251,7 @@ function addCards(colleague) {
                 <div class="card" style="width: 14rem;">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${email}"></a></li>
+                        <li class="list-group-item"> Email:  <a href="mailto:${email}">${email}</a></li>
                         <li class="list-group-item">Office Number: ${officeNumber}</li>
                     </ul>
                 </div>
@@ -259,7 +259,7 @@ function addCards(colleague) {
         </div>`
         }
         
-    fs.appendFile("./dist/index.html", html, function (err) {
+    fs.appendFile("./dist/index.html", data, function (err) {
         if (err) {
             console.log(err);
         }
@@ -274,7 +274,7 @@ function endHTML () {
     
     </body>
     </html>`;
-    fs.appendFile("./dist/index.html", html, function (err) {
+    fs.appendFile("./dist/index.html", htmlEnd, function (err) {
         if (err) {
             console.log(err);
         };
