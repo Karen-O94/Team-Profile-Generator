@@ -5,8 +5,8 @@ const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
- //This array will be populated to employees added to team profile
- const employees = [];
+//This array will be populated to employees added to team profile
+const employees = [];
 
 //Variables holding array of questions related to a manager, engineer or intern profile
 const managerQues = ["What is the team manager's name?",
@@ -19,8 +19,15 @@ const engineerQues = ["What is the engineer's name?",
     "What is the engineer's  GitHub username?"];
 const internQues = ["What is the intern's name?",
     "What is the intern's ID?",
-    "What is the intern's email?", 
+    "What is the intern's email?",
     "What is the intern's school?"];
+
+
+//function to initialise app
+function init () {
+    startHTML();
+    addManager();
+};
 
 //Manager questions
 function addManager() {
@@ -45,44 +52,33 @@ function addManager() {
             name: 'officeNum',
             message: managerQues[3],
         },
-    ]).then((data) =>{
-        let manager = new Manager (data.name, data.id, data.email, data.officeNum)
+    ]).then((data) => {
+        let manager = new Manager(data.name, data.id, data.email, data.officeNum)
         employees.push(manager)
         //TODO: pass 'manager' to card html
-    
+        addCards(manager);
         addEmployees();
-        writeToFile();
+        //writeToFile('./dist/index.html', data);
     });
 }
-
-
-// .then((response) => {
-//     if (response.memberChoice == 'engineer') {
-//         addEngineer();
-//     }
-//     else {
-//         addIntern();
-//     }
-// })
-//adding new members
 
 //This function adds team members
 function addEmployees() {
     inquirer.prompt([
         {
-            type:'list',
-            name:'memberChoice',
-            message:'Would you like to add more team members? Please select choices provided',
+            type: 'list',
+            name: 'memberChoice',
+            message: 'Would you like to add more team members? Please select choices provided',
             choices: ['engineer', 'intern', 'No I do not wish to add anymore members'],
         }
-    ]).then(function({memberChoice}) {
+    ]).then(function ({ memberChoice }) {
         if (memberChoice == 'engineer') {
             addEngineer();
         }
-        else if (memberChoice =='intern'){
+        else if (memberChoice == 'intern') {
             addIntern();
-        }else {
-            writeToFile(); //replace with html code
+        } else {
+            endHTML(); //replace with html code
         }
     })
 
@@ -110,13 +106,13 @@ function addEngineer() {
             name: 'github',
             message: engineerQues[3],
         },
-    ]).then((data) =>{
-        let engineer = new Engineer (data.name, data.id, data.email, data.officeNum)
+    ]).then((data) => {
+        let engineer = new Engineer(data.name, data.id, data.email, data.officeNum)
         employees.push(engineer)
         //TODO: pass 'manager' to card html
-    
+        addCards(engineer);
         addEmployees();
-        writeToFile('index.html',data);
+        //writeToFile();
     });
 }
 
@@ -143,25 +139,25 @@ function addIntern() {
             name: 'school',
             message: internQues[3],
         },
-    ]).then((data) =>{
-        let intern = new Intern (data.name, data.id, data.email, data.school)
+    ]).then((data) => {
+        let intern = new Intern(data.name, data.id, data.email, data.school)
         employees.push(intern)
         //TODO: pass 'manager' to card html
-    
+        addCards(intern);
         addEmployees();
-        writeToFile();
+        //writeToFile();
     });
 }
 
 
-function writeToFile(fileName, data) {
-    fs.writeFileSync(fileName, generateHTML(data), (err) =>
-    err ? console.error(err) : console.log('Successfully wrote to index.html!'));
-}
+// function writeToFile(fileName, data) {
+//     fs.writeFileSync(fileName, generateHTML(data), (err) =>
+//         err ? console.error(err) : console.log('Successfully wrote to index.html!'));
+// }
 //TODO: Add function to initialise app - ie manager and generateHTML
- function startHTML (input) {
-     let html = 
- `<!DOCTYPE html>
+function startHTML() {
+    let html =
+        `<!DOCTYPE html>
  <html lang="en">
  
  <head>
@@ -185,24 +181,24 @@ function writeToFile(fileName, data) {
      <div class="container">
          <div class="row">`;
 
-         fs.writeFile(".index.html", html, function(err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-        console.log("start")
- }
+    fs.writeFile("./dist/index.html", html, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    console.log("start")
+}
 
- function addTeamMember(colleague) {
-     return new Promise(function(resolve, reject){
-         const name = colleague.getName();
-         const id = colleague.getId();
-         const email = colleague.getEmail();
-         const role = colleague.getRole();
-            let data = ""; 
-         if(role === "Engineer"){
-             const github = colleague.getGithub();
-            data = 
+function addCards(colleague) {
+    return new Promise(function (resolve, reject) {
+        const name = colleague.getName();
+        const id = colleague.getId();
+        const email = colleague.getEmail();
+        const role = colleague.getRole();
+        let data = "";
+        if (role === "Engineer") {
+            const github = colleague.getGithub();
+            data =
                 `<div class="card border-dark col-md-3">
                 <div class="card-header text-white bg-primary">
                     <p>${name}</p>
@@ -220,11 +216,11 @@ function writeToFile(fileName, data) {
                     </div>
                 </div>
             </div>`;
-         }
-         else if (role === "Intern") {
+        }
+        else if (role === "Intern") {
             const school = colleague.getSchool();
-            data = 
-            `<div class="card border-dark col-md-3">
+            data =
+                `<div class="card border-dark col-md-3">
             <div class="card-header text-white bg-primary">
                 <p>${name}</p>
                 <p style="font-size: 26px">
@@ -241,10 +237,10 @@ function writeToFile(fileName, data) {
                 </div>
             </div>
         </div>`
-         } else {
+        } else {
             const officeNumber = colleague.getOfficeNum();
-            data = 
-            `<div class="card border-dark col-md-3">
+            data =
+                `<div class="card border-dark col-md-3">
             <div class="card-header text-white bg-primary">
                 <p>Name</p>
                 <p style="font-size: 26px">
@@ -261,8 +257,30 @@ function writeToFile(fileName, data) {
                 </div>
             </div>
         </div>`
-         }
-     })
- }
+        }
+        
+    fs.appendFile("./dist/index.html", html, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    console.log("start of the html")
+    });
+}
 
- addManager();
+function endHTML () {
+    const htmlEnd = ` </div>
+    </div>
+    
+    </body>
+    </html>`;
+    fs.appendFile("./dist/index.html", html, function (err) {
+        if (err) {
+            console.log(err);
+        };
+    });
+    console.log("end of html")
+}
+
+//Calling init function starts the app
+init();
