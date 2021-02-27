@@ -107,12 +107,11 @@ function addEngineer() {
             message: engineerQues[3],
         },
     ]).then((data) => {
-        let engineer = new Engineer(data.name, data.id, data.email, data.officeNum)
-        employees.push(engineer)
-        //TODO: pass 'manager' to card html
+        let engineer = new Engineer(data.name, data.id, data.email, data.github)
+        employees.push(engineer);
         addCards(engineer);
         addEmployees();
-        //writeToFile();
+       
     });
 }
 
@@ -211,7 +210,7 @@ function addCards(colleague) {
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">ID: ${id}</li>
                             <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-                            <li class="list-group-item">Github: ${github}</li>
+                            <li class="list-group-item">Github: <a href="https://github.com/${github}" target="_blank">${github}</a></li>
                         </ul>
                     </div>
                 </div>
