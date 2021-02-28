@@ -3,10 +3,12 @@ A Node.js command-line application that takes in information about employees on 
 
 ## Screenshots
 *Command line*
-![image](https://user-images.githubusercontent.com/74797740/108611777-d430d680-73d9-11eb-8ec1-b7bb0669e2ac.png)
+![image](https://user-images.githubusercontent.com/74797740/109425458-36906500-79e0-11eb-999b-a67681f9cb0a.png)
 
-*Generated Sample README file*
-![SampleREADME](https://user-images.githubusercontent.com/74797740/108613163-55db3100-73e7-11eb-9d25-5f9635ae9a6d.gif)
+![image](https://user-images.githubusercontent.com/74797740/109425490-62abe600-79e0-11eb-8142-f1c8affa15cd.png)
+
+*Generated Sample HTML file*
+![image](https://user-images.githubusercontent.com/74797740/109425601-ee257700-79e0-11eb-9865-0f0778fae75d.png)
 
 ## Installation
 In order to generate your team profile page, you will need to run `npm i inquirer` in order to install the 'inquirer' package dependencies as specified in the package.json.

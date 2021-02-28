@@ -148,12 +148,7 @@ function addIntern() {
     });
 }
 
-
-// function writeToFile(fileName, data) {
-//     fs.writeFileSync(fileName, generateHTML(data), (err) =>
-//         err ? console.error(err) : console.log('Successfully wrote to index.html!'));
-// }
-//TODO: Add function to initialise app - ie manager and generateHTML
+//This function writes the navbar of the html page
 function startHTML() {
     let html =
         `<!DOCTYPE html>
@@ -188,6 +183,7 @@ function startHTML() {
     console.log("start")
 }
 
+//this function generates the card for a manager, intern and engineer
 function addCards(colleague) {
     return new Promise(function (resolve, reject) {
         const name = colleague.getName();
@@ -273,6 +269,7 @@ function addCards(colleague) {
     });
 }
 
+//this function completes the HTML page
 function endHTML () {
     const htmlEnd = ` </div>
     </div>
