@@ -1,53 +1,63 @@
-//Example from child.tets.js
-describe("Child", () => {
-    // Test for all use cases when initializing a new Child object
-    describe("Initialization", () => {
-      it("should create an object with a name and age if provided valid arguments", () => {
-        const child = new Child("Sarah", 3);
-  
-        // Verify that the new object has the correct properties
-        expect(child.name).toEqual("Sarah");
-        expect(child.age).toEqual(3);
-      });
-  
-      it("should throw an error if provided no arguments", () => {
-        // Wrap the object initialization in a callback function that Jest will run
-        const cb = () => new Child();
-  
-        // Verify that an error was thrown in the callback function
-        expect(cb).toThrow();
-      });
-  
-      it("should throw an error if not provided an age", () => {
-        const cb = () => new Child("Sarah");
-  
-        // Define the error message that is expected to be thrown
-        const err = new Error("Expected parameter 'age' to be a non-negative number");
-  
-        // Verify that the correct error was thrown when the callback is executed
-        expect(cb).toThrowError(err);
-      });
-  
-      it("should throw an error if 'name' is not a string", () => {
-        const cb = () => new Child(3, 2);
-        const err = new Error("Expected parameter 'name' to be a non-empty string");
-  
-        expect(cb).toThrowError(err);
-      });
-  
-      it("should throw an error if 'age' is not a number", () => {
-        const cb = () => new Child("Sarah", "2");
-        const err = new Error("Expected parameter 'age' to be a non-negative number");
-  
-        expect(cb).toThrowError(err);
-      });
-  
-      it("should throw an error if 'age' is less than 0", () => {
-        const cb = () => new Child("Sarah", -1);
-        const err = new Error("Expected parameter 'age' to be a non-negative number");
-  
-        expect(cb).toThrowError(err);
-      });
+const Employee = require("../lib/employee");
+
+describe("Employee", () => {
+  it("Should instantiate the Employee class", () => {
+    const employee = new Employee();
+    expect(typeof (employee)).toBe('object');
+  });
+
+  it("Should set name via the constructor arguments", () => {
+    const nameEg = "John";
+    const employee = new Employee(nameEg);
+    expect(employee.name).toBe(nameEg);
+  });
+
+  it("Should id via the constructor arguments", () => {
+    const idEg = 14;
+    const employee = new Employee("John", idEg);
+    expect(employee.id).toBe(idEg);
+  });
+
+  it("Should email via the constructor arguments", () => {
+    const emailEg = "test@email.com";
+    const employee = new Employee("John", idEg, emailEg);
+    expect(employee.email).toBe(emailEg);
+  });
+
+  // getName() method Jest test
+  describe('getName', () => {
+    it('Should get name from getName()', () => {
+      const nameEg = 'Karen';
+      const employee = new Employee(nameEg);
+      expect(employee.getName()).toBe(nameEg);
     });
   });
-  
+
+  // getId() method Jest test
+  describe('getId', () => {
+    it('Should get id from getId()', () => {
+      const idEg = 10;
+      const employee = new Employee(10, idEg);
+      expect(employee.getId()).toBe(idEg);
+    });
+  });
+
+  // getEmail() method
+  describe('getEmail', () => {
+    it('Should retreive email from getEmail()', () => {
+      const emailEg = 'test@email.co.uk';
+      const employee = new Employee('email', 1, emailEg);
+      expect(employee.getEmail()).toBe(emailEg);
+    });
+  });
+
+  // getRole() method Jest test
+  describe('getRole', () => {
+    it('getRole() should return \"Employee\"', () => {
+      const roleEg = 'Employee';
+      const employee = new Employee('role', 1, 'test@email.co.uk');
+      expect(employee.getRole()).toBe(roleEg);
+    });
+  });
+
+});

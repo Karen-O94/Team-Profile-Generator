@@ -58,7 +58,7 @@ function addManager() {
         //TODO: pass 'manager' to card html
         addCards(manager);
         addEmployees();
-        //writeToFile('./dist/index.html', data);
+        
     });
 }
 
@@ -170,7 +170,7 @@ function startHTML() {
  </head>
  
  <body>
-     <div class="jumbotron jumbotron-fluid bg-danger" style="height: 80px">
+     <div class="jumbotron jumbotron-fluid bg-warning" style="height: 80px">
          <div class="container">
              <h1 class="display-4 text-center" style="color: white; font-weight: bold;">My Team</h1>
          </div>
@@ -198,9 +198,10 @@ function addCards(colleague) {
         if (role === "Engineer") {
             const github = colleague.getGithub();
             data =
-                `<div class="card border-dark col-md-3 m-4">
-                <div class="card-header text-white bg-primary">
-                    <p>${name}</p>
+                `<div class="col-md-3 m-4">
+                <div class="card border-dark">
+                <div class="card-header text-white bg-warning">
+                    <p style="font-size: 26px" >${name}</p>
                     <p style="font-size: 26px">
                         <i class="fas fa-glasses" style='font-size:26px;color:white'></i> Engineer
                     </p>
@@ -214,14 +215,16 @@ function addCards(colleague) {
                         </ul>
                     </div>
                 </div>
-            </div>`;
+             </div>
+        </div>`;
         }
         else if (role === "Intern") {
             const school = colleague.getSchool();
             data =
-                `<div class="card border-dark col-md-3 m-4">
-            <div class="card-header text-white bg-primary">
-                <p>${name}</p>
+                `<div class="col-md-3 m-4">
+                <div class="card border-dark">
+            <div class="card-header text-white bg-warning">
+                <p style="font-size: 26px">${name}</p>
                 <p style="font-size: 26px">
                     <i class="fas fa-user-graduate" style='font-size:26px;color:white'></i> Intern
                 </p>
@@ -232,16 +235,18 @@ function addCards(colleague) {
                         <li class="list-group-item">ID: ${id}</li>
                         <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
                         <li class="list-group-item">School: ${school}</li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>`
         } else {
             const officeNumber = colleague.getOfficeNum();
             data =
-                `<div class="card border-dark col-md-3 m-4">
-            <div class="card-header text-white bg-primary">
-                <p>${name}</p>
+                `<div class="col-md-3 m-4">
+                <div class="card border-dark">
+            <div class="card-header text-white bg-warning">
+                <p style="font-size: 26px">${name}</p>
                 <p style="font-size: 26px">
                     <i class='fas fa-mug-hot' style='font-size:26px;color:white'></i> Manager
                 </p>
@@ -254,16 +259,17 @@ function addCards(colleague) {
                         <li class="list-group-item">Office Number: ${officeNumber}</li>
                     </ul>
                 </div>
-            </div>
-        </div>`
+             </div>
+           </div>
+         </div>`
         }
         
     fs.appendFile("./dist/index.html", data, function (err) {
         if (err) {
-            console.log(err);
+            return reject(err);
         }
     });
-    console.log("start of the html")
+    return resolve();
     });
 }
 
@@ -278,7 +284,7 @@ function endHTML () {
             console.log(err);
         };
     });
-    console.log("end of html")
+    console.log("Your team profile has been successfully generated!")
 }
 
 //Calling init function starts the app
