@@ -12,15 +12,15 @@ describe("Employee", () => {
     expect(employee.name).toBe(nameEg);
   });
 
-  it("Should id via the constructor arguments", () => {
+  it("Should set id via the constructor arguments", () => {
     const idEg = 14;
     const employee = new Employee("John", idEg);
     expect(employee.id).toBe(idEg);
   });
 
-  it("Should email via the constructor arguments", () => {
+  it("Should set email via the constructor arguments", () => {
     const emailEg = "test@email.com";
-    const employee = new Employee("John", idEg, emailEg);
+    const employee = new Employee("John", 4, emailEg);
     expect(employee.email).toBe(emailEg);
   });
 
