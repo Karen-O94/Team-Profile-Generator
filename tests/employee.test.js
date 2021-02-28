@@ -51,7 +51,7 @@ describe("Employee", () => {
     });
   });
 
-  // getRole() method Jest test
+  // getRole() method
   describe('getRole', () => {
     it('getRole() should return \"Employee\"', () => {
       const roleEg = 'Employee';
