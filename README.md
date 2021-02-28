@@ -24,7 +24,11 @@ Once jest is installed, run `npm run test` in your command line to check if test
 
 ## Usage 
 
+![TeamProfileGeneratorSpeedUpComp](https://user-images.githubusercontent.com/74797740/109427845-1ebede00-79ec-11eb-8539-a796572718f6.gif)
+
+
 *Please see the video walkthrough for this application below*
+
 [Google Drive Link to video walkthrough](https://drive.google.com/file/d/10iobRitOcP7DmR6Hh00mCIL196Ea_wcB/view?usp=sharing)
 
 After running `node index.js` within the command line, the inquirer package will prompt users to answer a series of questions based on their team. 
