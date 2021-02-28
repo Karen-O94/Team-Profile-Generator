@@ -25,9 +25,7 @@ Once jest is installed, run `npm run test` in your command line to check if test
 ## Usage 
 
 *Please see the video walkthrough for this application below*
-![READMEGeneratorComp](https://user-images.githubusercontent.com/74797740/108613080-65a64580-73e6-11eb-93c4-2403430032de.gif)
-
-[Google Drive Link to video walkthrough](https://drive.google.com/file/d/18lkkwei-JA-34o3CtTS4qdAJs0bhPPYs/view)
+[Google Drive Link to video walkthrough](https://drive.google.com/file/d/10iobRitOcP7DmR6Hh00mCIL196Ea_wcB/view?usp=sharing)
 
 After running `node index.js` within the command line, the inquirer package will prompt users to answer a series of questions based on their team. 
 
